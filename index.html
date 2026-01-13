@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTrack | Next-Gen Asset Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --primary: #BB86FC;
+            --secondary: #03DAC6;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Ambient Background Glows --- */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: float 10s infinite ease-in-out;
+        }
+        .orb-1 { width: 400px; height: 400px; background: var(--primary); top: -100px; left: -100px; }
+        .orb-2 { width: 500px; height: 500px; background: var(--secondary); bottom: -100px; right: -100px; animation-delay: 2s; }
+        
+        /* Third orb for the longer page */
+        .orb-3 { 
+            width: 300px; height: 300px; 
+            background: #ff7597; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%);
+            opacity: 0.15;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 50px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 80px;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--primary), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .portfolio-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            font-weight: 600;
+        }
+        .portfolio-link:hover { color: var(--primary); }
+
+        /* --- Hero Section --- */
+        .hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 100px auto;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .btn-main {
+            display: inline-flex;
+            align-items: center;
+            padding: 18px 48px;
+            background: rgba(187, 134, 252, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(187, 134, 252, 0.3);
+            border-radius: 100px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(187, 134, 252, 0.1);
+        }
+
+        .btn-main:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 40px rgba(187, 134, 252, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* --- Features Grid (Glassmorphism) --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Slightly wider cards */
+            gap: 30px;
+            margin-bottom: 100px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .icon-box {
+            width: 50px; height: 50px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 1.5rem;
+        }
+
+        .glass-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .glass-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            padding: 60px 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .footer-link:hover { opacity: 0.8; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <div class="container">
+        <nav>
+            <div class="logo">FinTrack.</div>
+            <div class="nav-links">
+                <div style="font-size: 0.8rem; padding: 6px 12px; border-radius: 20px; background: rgba(255,255,255,0.1);">v1.0</div>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <h1>Master your Assets with <br><span class="gradient-text">Double-Entry Precision</span></h1>
+            <p class="subtitle">
+                Stop just tracking "expenses." Start managing real wealth. 
+                Synchronize your physical wallet and bank accounts in one futuristic interface.
+            </p>
+            
+            <a href="YOUR_APK_LINK_HERE" class="btn-main">
+                Download APK <span style="margin-left: 10px;">↓</span>
+            </a>
+            
+            <p style="margin-top: 20px; font-size: 0.8rem; color: rgba(255,255,255,0.4);">
+                *Compatible with Android 8.0+
+            </p>
+        </section>
+
+        <section class="features-grid">
+            <div class="glass-card">
+                <div class="icon-box" style="color: var(--primary);">🏦</div>
+                <h3>Multi-Asset Engine</h3>
+                <p>Track distinct balances for "HNB Bank," "Wallet," and more. Funds move logically, mirroring real-world cash flow.</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="icon-box" style="color: var(--secondary);">📊</div>
+                <h3>Visual Intelligence</h3>
+                <p>Interactive donut charts and color-coded spending breakdowns help you spot financial leaks instantly.</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="icon-box" style="color: #ff7597;">🔄</div>
+                <h3>Smart Reversal</h3>
+                <p>Made a mistake? Deleting a transaction automatically refunds the exact amount to the source account.</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="icon-box" style="color: #ffd700;">🎯</div>
+                <h3>Target Lock</h3>
+                <p>Set financial goals with futuristic progress bars. Watch your savings grow in real-time.</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="icon-box" style="color: #4CAF50;">🎨</div>
+                <h3>Limitless Customization</h3>
+                <p>Create your own income and expense categories with custom icons and colors to match your lifestyle.</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="icon-box" style="color: #2196F3;">☁️</div>
+                <h3>Cloud Sync</h3>
+                <p>Powered by Google Firebase. Your financial data is encrypted, backed up, and available across devices.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 FinTrack.</p>
+            <p style="margin-top: 10px; color: var(--text-muted);">
+                Designed & Developed by 
+                <a href="https://tharusha-kawshalya.vercel.app/" target="_blank" class="footer-link">Edirithanthiri Tharusha Kawshalya</a>
+            </p>
+            <a href="https://tharusha-kawshalya.vercel.app/" target="_blank" class="portfolio-link">Developer Portfolio ↗</a>
+        </footer>
+    </div>
+
+</body>
+</html>
