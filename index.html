@@ -31,6 +31,7 @@
             color: var(--text-main);
             overflow-x: hidden;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* --- Ambient Background Glows --- */
@@ -41,11 +42,10 @@
             z-index: -1;
             opacity: 0.4;
             animation: float 10s infinite ease-in-out;
+            pointer-events: none; /* Prevents interference with scrolling */
         }
         .orb-1 { width: 400px; height: 400px; background: var(--primary); top: -100px; left: -100px; }
         .orb-2 { width: 500px; height: 500px; background: var(--secondary); bottom: -100px; right: -100px; animation-delay: 2s; }
-        
-        /* Third orb for the longer page */
         .orb-3 { 
             width: 300px; height: 300px; 
             background: #ff7597; 
@@ -63,6 +63,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 40px 20px;
+            width: 100%;
         }
 
         /* --- Navigation --- */
@@ -103,6 +104,7 @@
             max-width: 800px;
             margin: 0 auto 100px auto;
             animation: fadeIn 1s ease-out;
+            padding: 0 10px;
         }
         
         h1 {
@@ -128,6 +130,7 @@
 
         .btn-main {
             display: inline-flex;
+            justify-content: center;
             align-items: center;
             padding: 18px 48px;
             background: rgba(187, 134, 252, 0.1);
@@ -139,6 +142,7 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
             box-shadow: 0 0 20px rgba(187, 134, 252, 0.1);
+            white-space: nowrap;
         }
 
         .btn-main:hover {
@@ -151,7 +155,8 @@
         /* --- Features Grid (Glassmorphism) --- */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Slightly wider cards */
+            /* Changed minmax to 300px to better fit mobile screens before breaking */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
             gap: 30px;
             margin-bottom: 100px;
         }
@@ -167,6 +172,7 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            height: 100%;
         }
 
         .glass-card:hover {
@@ -184,6 +190,7 @@
             justify-content: center;
             margin-bottom: 24px;
             font-size: 1.5rem;
+            flex-shrink: 0;
         }
 
         .glass-card h3 {
@@ -209,6 +216,7 @@
             color: var(--primary);
             text-decoration: none;
             transition: opacity 0.2s;
+            display: inline-block;
         }
         .footer-link:hover { opacity: 0.8; }
 
@@ -217,9 +225,47 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 768px) {
+        /* --- Tablet Responsiveness --- */
+        @media (max-width: 900px) {
+            h1 { font-size: 3.5rem; }
+            .hero { margin-bottom: 80px; }
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 600px) {
+            .container { padding: 30px 20px; }
+            
+            nav {
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 60px;
+            }
+
             h1 { font-size: 2.8rem; }
-            .features-grid { grid-template-columns: 1fr; }
+            
+            .features-grid { 
+                grid-template-columns: 1fr; /* Force single column on mobile */
+                gap: 20px;
+            }
+
+            .orb-1, .orb-2 { width: 300px; height: 300px; }
+        }
+
+        /* --- Small Mobile (Small Phones) --- */
+        @media (max-width: 400px) {
+            h1 { font-size: 2.4rem; letter-spacing: -1px; }
+            .subtitle { font-size: 1.1rem; }
+            
+            .btn-main {
+                width: 100%; /* Full width button for better thumb reach */
+                padding: 16px;
+            }
+
+            .glass-card {
+                padding: 30px 25px; /* Reduce padding to save space */
+            }
+
+            .glass-card h3 { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -294,10 +340,12 @@
         <footer>
             <p>© 2026 FinTrack.</p>
             <p style="margin-top: 10px; color: var(--text-muted);">
-                Designed & Developed by 
-                <a href="https://tharusha-kawshalya.vercel.app/" target="_blank" class="footer-link">Edirithanthiri Tharusha Kawshalya</a>
+                Designed & Developed by <br>
+                <a href="https://tharusha-kawshalya.vercel.app/" target="_blank" class="footer-link" style="margin-top: 5px;">Edirithanthiri Tharusha Kawshalya</a>
             </p>
-            <a href="https://tharusha-kawshalya.vercel.app/" target="_blank" class="portfolio-link">Developer Portfolio ↗</a>
+            <div style="margin-top: 20px;">
+                <a href="https://tharusha-kawshalya.vercel.app/" target="_blank" class="portfolio-link">Developer Portfolio ↗</a>
+            </div>
         </footer>
     </div>
 
