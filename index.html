@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FinTrack | Next-Gen Asset Management</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,26 +23,41 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent; 
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
+        html, body {
+            width: 100%;
+            max-width: 100%;
             overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            /* REMOVED background-color from here to prevent hiding the orbs */
+            color: var(--text-main);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Ambient Background Glows --- */
+        /* --- BACKGROUND WRAPPER (Fixed Layer) --- */
+        .background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Stays behind everything */
+            
+            /* ADDED: Background color lives here now */
+            background-color: var(--bg-dark); 
+        }
+
         .glow-orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(100px);
-            z-index: -1;
+            filter: blur(80px);
             opacity: 0.4;
             animation: float 10s infinite ease-in-out;
-            pointer-events: none; /* Prevents interference with scrolling */
+            will-change: transform;
         }
         .orb-1 { width: 400px; height: 400px; background: var(--primary); top: -100px; left: -100px; }
         .orb-2 { width: 500px; height: 500px; background: var(--secondary); bottom: -100px; right: -100px; animation-delay: 2s; }
@@ -59,11 +74,14 @@
             50% { transform: translate(30px, 50px); }
         }
 
+        /* --- CONTENT LAYER --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 40px 20px;
             width: 100%;
+            position: relative;
+            z-index: 1; /* Ensures content sits ABOVE the background wrapper */
         }
 
         /* --- Navigation --- */
@@ -113,6 +131,7 @@
             line-height: 1.1;
             margin-bottom: 24px;
             letter-spacing: -2px;
+            word-wrap: break-word;
         }
         
         .gradient-text {
@@ -152,11 +171,10 @@
             transform: translateY(-2px);
         }
 
-        /* --- Features Grid (Glassmorphism) --- */
+        /* --- Features Grid --- */
         .features-grid {
             display: grid;
-            /* Changed minmax to 300px to better fit mobile screens before breaking */
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 30px;
             margin-bottom: 100px;
         }
@@ -225,13 +243,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- Tablet Responsiveness --- */
         @media (max-width: 900px) {
             h1 { font-size: 3.5rem; }
             .hero { margin-bottom: 80px; }
         }
 
-        /* --- Mobile Responsiveness --- */
         @media (max-width: 600px) {
             .container { padding: 30px 20px; }
             
@@ -244,36 +260,30 @@
             h1 { font-size: 2.8rem; }
             
             .features-grid { 
-                grid-template-columns: 1fr; /* Force single column on mobile */
+                grid-template-columns: 1fr; 
                 gap: 20px;
             }
 
             .orb-1, .orb-2 { width: 300px; height: 300px; }
         }
 
-        /* --- Small Mobile (Small Phones) --- */
         @media (max-width: 400px) {
             h1 { font-size: 2.4rem; letter-spacing: -1px; }
             .subtitle { font-size: 1.1rem; }
             
-            .btn-main {
-                width: 100%; /* Full width button for better thumb reach */
-                padding: 16px;
-            }
-
-            .glass-card {
-                padding: 30px 25px; /* Reduce padding to save space */
-            }
-
+            .btn-main { width: 100%; padding: 16px; }
+            .glass-card { padding: 30px 25px; }
             .glass-card h3 { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="glow-orb orb-1"></div>
-    <div class="glow-orb orb-2"></div>
-    <div class="glow-orb orb-3"></div>
+    <div class="background-wrapper">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
 
     <div class="container">
         <nav>
